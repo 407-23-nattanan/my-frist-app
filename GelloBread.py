@@ -4,27 +4,32 @@ st.title("GelloBread🥐")
 st.divider() 
 
 st.header("Order Summary")
-A = st.number_input("ครัวซองค์  45บาท/piece",min_value=0, value=0, step=1)
-B = st.number_input("เจลาโต้รสพิสตาชีโอ 99บาท/serve",min_value=0, value=0, step=1)
-C = st.number_input(" ชิโอะปัง  55บาท/piece",min_value=0, value=0, step=1)
+A = st.number_input("ครัวซองค์ 45บาท/piece", min_value=0, value=0, step=1)
+B = st.number_input("เจลาโต้รสพิสตาชีโอ 99บาท/serve", min_value=0, value=0, step=1)
+C = st.number_input("ชิโอะปัง 55บาท/piece", min_value=0, value=0, step=1)
 
 st.header("Payment Summary")
 total = (A * 45) + (B * 99) + (C * 55)
-st.subheader(f"ราคารวมทั้งหมด: {total:,} บาท")
 
-if st.button("คำนวนค่า BMI 🎯"):
-    height_m = height_cm / 100
-    bmi = weight / (height_m ** 2)
+# คำนวณเปอร์เซ็นต์ส่วนลด
+discount_percent = 0
 
-    st.write("---")
-    st.header(f"ค่า BMI ของคุณคือ: **{bmi:.2f}**")
+# ตรวจสอบส่วนลดตามยอดซื้อ
+if total >= 500:
+    discount_percent = 20
+elif total > 199:
+    discount_percent = 10
 
-    if bmi < 18.5:
-        st.warning("⚠️ คุรมีน้ำหนักน้อยกว่าเกณฑ์ (ผอม)")
-    elif 18.5 <= bmi < 23.0:
-        st.success("🎉 คุณมีน้ำหนักอยู่ในเกณฑ์ปกติ (สุขภาพดี)")
-    elif 23.0 <= bmi < 25.0:
-        st.info("💡 คุณมีน้ำหนักเกินกว่าเกณฑ์ (ท้วม)")
-    else:
-        st.error("🚨 คุณอยู่ในเกณฑ์อ้วน ควรระวังเรื่องสุขภาพและออกกำลังกาย")
+# ตรวจสอบว่าได้ส่วนลดจับคู่ครัวซองค์ + เจลาโต้ 5% หรือไม่
+if A > 0 and B > 0:
+    # เลือกเปอร์เซ็นต์ส่วนลดที่สูงที่สุด
+    discount_percent = max(discount_percent, 5)
 
+# คำนวณจำนวนเงินส่วนลดและราคาสุทธิ
+discount_amount = total * (discount_percent / 100)
+final_price = total - discount_amount
+
+# แสดงผลใน Streamlit
+st.subheader(f"ราคารวมทั้งหมด: {total:,.2f} บาท")
+st.subheader(f"ส่วนลด ({discount_percent}%): -{discount_amount:,.2f} บาท")
+st.subheader(f"ราคาหลังหักส่วนลด: {final_price:,.2f} บาท")
