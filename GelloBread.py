@@ -4,9 +4,10 @@ st.title("GelloBread🥐")
 st.divider() 
 
 st.header("Order Summary")
-A = st.number_input("ครัวซองค์ 45บาท/piece", min_value=0, value=0, step=1)
+A = st.number_input("ครัวซองค์ 45บาท/piece", min_value=0, value=0, step=5)
 B = st.number_input("เจลาโต้รสพิสตาชีโอ 99บาท/serve", min_value=0, value=0, step=1)
 C = st.number_input("ชิโอะปัง 55บาท/piece", min_value=0, value=0, step=1)
+st.divider() 
 
 st.header("Payment Summary")
 total = (A * 45) + (B * 99) + (C * 55)
@@ -27,3 +28,7 @@ Net_Total = total - discount_amount
 st.subheader(f"ราคารวมทั้งหมด: {total:,.2f} บาท")
 st.subheader(f"ส่วนลด ({discount_percent}%): -{discount_amount:,.2f} บาท")
 st.subheader(f"ราคาหลังหักส่วนลด: {Net_Total:,.2f} บาท")
+st.divider() 
+
+st.header("Cash Payment")
+X = st.number_input("รับเงิน", min_value=0, value=0, step=1)
