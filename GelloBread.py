@@ -4,7 +4,7 @@ st.title("GelloBread🥐")
 st.divider() 
 
 st.header("Order Summary")
-A = st.number_input("ครัวซองค์ 45บาท/piece", min_value=0, value=0, step=5)
+A = st.number_input("ครัวซองค์ 45บาท/piece", min_value=0, value=0, step=1)
 B = st.number_input("เจลาโต้รสพิสตาชีโอ 99บาท/serve", min_value=0, value=0, step=1)
 C = st.number_input("ชิโอะปัง 55บาท/piece", min_value=0, value=0, step=1)
 st.divider() 
@@ -31,4 +31,12 @@ st.subheader(f"ราคาหลังหักส่วนลด: {Net_Total:,
 st.divider() 
 
 st.header("Cash Payment")
-X = st.number_input("รับเงิน", min_value=0, value=0, step=1)
+X = st.number_input("รับเงิน -บาท", min_value=0, value=0, step=5)
+if Net_Total > 0:
+    if X >= Net_Total:
+        change = X - Net_Total
+        st.subheader(f"เงินทอน: {change:,.2f} บาท")
+    else:
+        st.warning(f"ยังขาดอีก {Net_Total - X:,.2f} บาท")
+else:
+    st.subheader("เงินทอน: 0.00 บาท")
